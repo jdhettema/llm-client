@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import llmImage from '../assets/images/llm-illustration.png';
 
 const LoginPage = () => {
     const [username, setUserName] = useState('');
@@ -144,7 +145,7 @@ const LoginPage = () => {
 
             <div className='login-image'>
                 <img
-                    src="/images/llm-illustration.png"
+                    src={llmImage}
                     alt="AI Language Model Illustration"
                 />
             </div>

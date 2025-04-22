@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import llmImage from '../assets/images/llm-illustration.png';
+
 
 const HomePage = () => {
     const { isAuthenticated, currentUser } = useAuth();
@@ -44,7 +46,7 @@ const HomePage = () => {
 
                 <div className="hero-image">
                     <img 
-                        src="/images/llm-illustration.png"
+                        src={llmImage} //src/assets/images/llm-illustration.png
                         alt="AI Language Model Illustration"
                     />
                 </div>
