@@ -22,20 +22,25 @@ const Sidebar = ({
   const handleCreateNewChat = async () => {
     if (isLoading) return;
     
-    const newId = await createConversation('New Conversation');
-    if (newId) {
-      navigate('/chat');
+    try {
+      console.log("Creating new conversation...");
+      const conversationId = await createConversation("New Conversation");
+      console.log("New conversation created with ID:", conversationId);
+      if (conversationId) {
+        console.log("Navigating to:", `/chat/${conversationId}`);
+        navigate(`/chat/${conversationId}`);
+      } else {
+        console.error("No conversation ID returned");
+      }
+    } catch (error) {
+      console.error("Failed to create conversation", error);
     }
   };
 
-  const handleSelectConversation = async (id) => {
+  const handleSelectConversation = (conversationId) => {
     if (isLoading) return;
     
-    await switchConversation(id);
-    if (isMobile) {
-      onClose();
-    }
-    navigate('/chat');
+    navigate(`/chat/${conversationId}`);
   };
 
   const handleDeleteClick = (e, id) => {
@@ -127,7 +132,7 @@ const Sidebar = ({
                           onClick={(e) => handleDeleteClick(e, conversation.id)}
                           aria-label="Delete conversation"
                         >
-                          🗑️
+                          ❌
                         </button>
                       )}
                     </div>

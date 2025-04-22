@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
 const LoginPage = () => {
@@ -89,7 +89,7 @@ const LoginPage = () => {
                             onChange={(e) => setUserName(e.target.value)}
                             placeholder="Enter your username"
                             disabled={isSubmitting}
-                            autocomplete="username"
+                            autoComplete="username"
                         />
                     </div>
 
@@ -102,7 +102,7 @@ const LoginPage = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Enter your password"
                             disabled={isSubmitting}
-                            autocomplete="current-password"
+                            autoComplete="current-password"
                         />
                     </div>
 

@@ -23,9 +23,9 @@ const HomePage = () => {
 
                     <div className="cta-buttons">
                         {isAuthenticated ? (
-                            <link to="/chat" className="primary-button">
+                            <Link to="/chat" className="primary-button">
                                 Go to Chat
-                            </link>
+                            </Link>
                         ) : (
                             <Link to="/login" className="primary-button">
                                 Get Started

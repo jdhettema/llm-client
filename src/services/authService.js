@@ -1,5 +1,5 @@
 import api from './api';
-import * as jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 /**
  * Auth Service for handling authentication-related API calls

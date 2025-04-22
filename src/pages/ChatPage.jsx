@@ -3,14 +3,22 @@ import { useAuth } from '../hooks/useAuth';
 import ChatHistory from '../components/ChatHistory';
 import PromptForm from '../components/llm/PromptForm';
 import LoadingSpinner from '../components/common/LoadingSpinner';
-import { llmService } from '../services/llmService';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useChat } from '../hooks/useChat';
+import api from '../services/api';
 
 const ChatPage = () => {
     const { currentUser } = useAuth();
-    const [messages, setMessages] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
     const messageEndRef = useRef(null);
+    const { conversationId } = useParams();
+    const {
+        activeConversationId,
+        messages,
+        sendPrompt,
+        switchConversation,
+        loading,
+        error
+    } = useChat();
 
     const scrollToBottom = () => {
         messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -21,52 +29,25 @@ const ChatPage = () => {
     }, [messages]);
 
     useEffect(() => {
-        const fetchHistory = async () => {
-            try {
-                setLoading(true);
-                const history = await llmService.getChatHistory();
-                setMessages(history);
-            } catch (err) {
-                setError('Failed to load chat history');
-                console.error(err);
-            } finally {
-                setLoading(false);
+        const handleConversationChange = async () => {
+            if (conversationId && conversationId !== activeConversationId) {
+                console.log(`Switching conversation to: ${conversationId}`);
+                await switchConversation(conversationId);
+            } else if (!conversationId && activeConversationId) {
+                navigate(`/chat/${activeConversationId}`, { replace: true });
             }
         };
 
-        fetchHistory();
-    }, []);
+        handleConversationChange();
+    }, [conversationId, activeConversationId, switchConversation, navigate]);
 
     const handleSendPrompt = async (prompt) => {
-        if (!prompt.trim()) return;
-
-        const userMessage = {
-            id: Date.now(),
-            content: prompt,
-            role: 'user',
-            timestamp: new Date().toISOString()
-        };
-
-        setMessages(prev => [...prev, userMessage]);
-        setLoading(true);
-        setError(null);
+        if (!prompt.trim() || loading) return;
 
         try {
-            const response = await llmService.sendQuery(prompt);
-
-            const assistantMessage = {
-                id: Date.now() + 1,
-                content: response.response,
-                role: 'assistant',
-                timestamp: new Date().toISOString()
-            };
-
-            setMessages(prev => [...prev, assistantMessage]);
+            await sendPrompt(prompt);
         } catch (err) {
-            setError('Failed to get a response. Please try again.');
-            console.error(err);
-        } finally {
-            setLoading(false);
+            console.error('Error sending prompt:', err);
         }
     };
 
@@ -75,8 +56,8 @@ const ChatPage = () => {
             <div className="chat-header">
                 <h1>Chat with LLM</h1>
                 <div className="user-info">
-                    <span>Logged in as: {currentUser.username}</span>
-                    <span className="role-badge">{currentUser.role}</span>
+                    <span>Logged in as: {currentUser?.username}</span>
+                    <span className="role-badge">{currentUser?.role}</span>
                 </div>
             </div>
 

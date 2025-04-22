@@ -177,12 +177,21 @@ export const ChatProvider = ({ children }) => {
 
     const createConversation = async (title = 'New Conversation') => {
         try {
+            dispatch({ type: ACTIONS.SET_LOADING, payload: true });
+
+            const newConversation = await llmService.createConversation({ title });
+            
             dispatch({
                 type: ACTIONS.CREATE_CONVERSATION,
                 payload: {
                     id: newConversation.id,
                     title: newConversation.title
                 }
+            });
+
+            dispatch({
+                type: ACTIONS.SET_ACTIVE_CONVERSATION,
+                payload: newConversation.id
             });
 
             return newConversation.id;
