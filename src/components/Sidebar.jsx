@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useChat } from '../../hooks/useChat';
+import { useChat } from '../hooks/useChat';
 
 const Sidebar = ({ 
   isOpen, 
