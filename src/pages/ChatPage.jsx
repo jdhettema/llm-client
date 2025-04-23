@@ -11,6 +11,7 @@ const ChatPage = () => {
     const { currentUser } = useAuth();
     const messageEndRef = useRef(null);
     const { conversationId } = useParams();
+    const navigate = useNavigate();
     const {
         activeConversationId,
         messages,
@@ -24,6 +25,19 @@ const ChatPage = () => {
         messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
+    useEffect(() => {
+        console.log('ChatPage component mounted');
+
+        console.log('Current user:', currentUser);
+        console.log('Messages:', messages);
+        console.log('Loading state:', loading);
+        console.log('Error state:', error);
+
+        return () => {
+            console.log('ChatPage component unmounted');
+        }
+    }, [currentUser, messages, loading, error]);
+    
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
@@ -74,6 +88,10 @@ const ChatPage = () => {
             </div>
 
             <div className="prompt-container">
+                {console.log('Rendering PromptForm', {
+                    isPromptFormDefined: !!PromptForm,
+                    loadingState: loading,
+                })}
                 <PromptForm
                     onSendPrompt={handleSendPrompt}
                     isLoading={loading}

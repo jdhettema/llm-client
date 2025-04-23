@@ -18,30 +18,12 @@ function App() {
             <Route path='/login' element={<LoginPage />} />
             <Route path='/' element={<MainLayout />}>
               <Route index element={<HomePage />} />
-              <Route 
-                path='chat' 
-                element={
-                  <PrivateRoute>
-                    <ChatPage />
-                  </PrivateRoute>
-                } 
-              />
-              <Route
-                path='chat/:conversationId'
-                element={
-                  <PrivateRoute>
-                    <ChatPage />
-                  </PrivateRoute>
-                }
-              />
-              <Route 
-                path='settings' 
-                element={
-                  <PrivateRoute>
-                    <SettingsPage />
-                  </PrivateRoute>
-                } 
-              />
+              
+              <Route element={<PrivateRoute />}>
+                <Route path = 'chat' element={<ChatPage />} />
+                <Route path = 'chat/:conversationId' element={<ChatPage />} />
+                <Route path = 'settings' element={<SettingsPage />} />
+              </Route>
               <Route path='*' element={<NotFoundPage />} />
             </Route>
           </Routes>

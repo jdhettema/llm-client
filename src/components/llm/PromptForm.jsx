@@ -4,6 +4,7 @@ import Button from '../common/Button';
 const PromptForm = ({ onSendPrompt, isLoading }) => {
     const [prompt, setPrompt] = useState('');
 
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         if (prompt.trim() && !isLoading) {

@@ -20,7 +20,7 @@ const Sidebar = ({
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
 
   const handleCreateNewChat = async () => {
-    if (isLoading) return;
+    //if (isLoading) return;
     
     try {
       console.log("Creating new conversation...");
@@ -59,7 +59,6 @@ const Sidebar = ({
     setShowDeleteConfirm(null);
   };
 
-  // Get sorted conversations with newest first
   const sortedConversations = [...(conversations || [])].sort((a, b) => {
     return new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt);
   });
@@ -89,7 +88,7 @@ const Sidebar = ({
           onClick={handleCreateNewChat}
           disabled={isLoading}
         >
-          <span className="icon">+</span> New Conversation
+          <span className="icon">💬</span> New Conversation
         </button>
         
         <nav className="conversation-list">

@@ -62,7 +62,7 @@ const MainLayout = () => {
                     userRole={currentUser?.role}
                 />
 
-                <main className={`content-area ${sidebarOpen ? 'with-sidebar' : 'sidebar-collapsed'}`}>
+                <main className={`content-area ${sidebarOpen ? 'width-sidebar' : 'sidebar-collapsed'}`}>
                     <Outlet context={{ isMobile, sidebarOpen }} />
                 </main>
             </div>

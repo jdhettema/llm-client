@@ -189,15 +189,10 @@ export const ChatProvider = ({ children }) => {
                 }
             });
 
-            dispatch({
-                type: ACTIONS.SET_ACTIVE_CONVERSATION,
-                payload: newConversation.id
-            });
-
             return newConversation.id;
+
         } catch (error) {
             console.error('Failed to create conversation', error);
-            dispatch({ type: ACTIONS.SET_ERROR, payload: 'Failed to create conversation. Please try again.' });
             return null;
         } finally {
             dispatch({ type: ACTIONS.SET_LOADING, payload: false });

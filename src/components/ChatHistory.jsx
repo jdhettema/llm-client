@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import * as ReactMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -37,7 +37,7 @@ const ChatHistory = ({ messages = [], loading = false, onRetry, onDelete }) => {
         }
     };
 
-    const renderers = {
+    const components = {
         code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || '');
             return !inline && match ? (
@@ -97,12 +97,11 @@ const ChatHistory = ({ messages = [], loading = false, onRetry, onDelete }) => {
                                     )}
                                 </div>
                             ) : (
-                                <ReactMarkdown
-                                    components={renderers}
-                                    className='markdown-content'
-                                >
-                                    {message.content}
-                                </ReactMarkdown>
+                                <div className='markdown-content'>
+                                    <ReactMarkdown components={components}>
+                                        {message?.content || ''}
+                                    </ReactMarkdown>
+                                </div>
                             )}
                         </div>
 

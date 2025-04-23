@@ -6,9 +6,13 @@ export const llmService = {
    * @param {string} prompt - The user's prompt text
    * @returns {Promise} - Promise with response data
    */
-  sendQuery: async (prompt) => {
+  sendQuery: async ({ prompt, conversationId }) => {
     try {
-        const response = await api.post('/query', { prompt });
+        console.log('Sending query to LLM:', { prompt, conversationId });
+        const response = await api.post('/query', { 
+            prompt,
+            conversationId
+        });
         return response.data;
     } catch (error){
         console.error('Error querying LLM:', error);

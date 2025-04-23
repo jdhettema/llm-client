@@ -7,6 +7,7 @@ import { useAuth } from '../../hooks/useAuth';
  * @param {Array} props.allowedRoles - Optional array of roles permitted to access this route
  * @returns {JSX.Element} - Rendered component
  */
+
 const PrivateRoute = ({ allowedRoles }) => {
   const { isAuthenticated, currentUser, loading } = useAuth();
   const location = useLocation();
